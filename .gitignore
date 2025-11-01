@@ -1,0 +1,24 @@
+# Don't commit the output directory or Jupyter checkpoints
+output/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+*.egg-info/
+
+# Environment variables
+.env
+
+# Database data (handled by Docker volumes)
+postgres_data/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

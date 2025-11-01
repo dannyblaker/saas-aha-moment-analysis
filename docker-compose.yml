@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: aha_moment_db
+    environment:
+      POSTGRES_DB: taskmanagement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: aha_moment_app
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/app
+      - jupyter_data:/root/.jupyter
+      - ./output:/output
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=taskmanagement
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: >
+      sh -c "
+        echo 'Waiting for database to be ready...' &&
+        sleep 5 &&
+        echo 'Generating mock data...' &&
+        python generate_mock_data.py &&
+        echo 'Generating schema diagram...' &&
+        python generate_schema_diagram.py &&
+        echo 'Starting Jupyter Notebook...' &&
+        echo '' &&
+        echo '========================================' &&
+        echo 'Setup complete! Access Jupyter at:' &&
+        echo 'http://localhost:8888' &&
+        echo '' &&
+        echo 'Open analysis.ipynb to see the aha moment analysis' &&
+        echo 'Schema diagram saved to: ./output/schema_diagram.png' &&
+        echo '========================================' &&
+        echo '' &&
+        jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+      "
+
+volumes:
+  postgres_data:
+  jupyter_data:
