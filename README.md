@@ -189,15 +189,6 @@ This project structure can be adapted for:
 - 🎮 Gaming: Player engagement metrics
 - 💼 B2B SaaS: Enterprise conversion patterns
 
-## 🤝 Contributing
-
-Feel free to:
-- Add more sophisticated statistical models
-- Implement machine learning predictions
-- Add real-time dashboard visualizations
-- Create additional analysis notebooks
-- Improve the mock data generation
-
 ## 📜 License
 
 This project is open source and available for educational and commercial use.
