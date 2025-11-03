@@ -11,8 +11,7 @@ A complete data analytics project that demonstrates how to identify the **"aha m
 The "aha moment" is when users experience the core value of your product, making them significantly more likely to convert to paying customers. Famous examples:
 
 - **Facebook**: Users who add 7 friends in 10 days
-- **Slack**: Teams that send 2,000 messages  
-- **Dropbox**: Users who put files in one folder on one device
+- **Slack**: Teams that send 2,000 messages
 
 This project analyzes user behavior data to identify similar patterns for a task management SaaS app.
 
